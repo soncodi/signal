@@ -30,7 +30,7 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "package": "npm run clean && npm run build && ./package.sh",
-    "push": "cd ./build/package && npm publish"
+    "push": "cd ./build/package && npm publish --access=public"
   },
   "devDependencies": {
     "alsatian": "~2.2.1",
