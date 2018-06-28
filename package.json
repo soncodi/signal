@@ -1,0 +1,40 @@
+{
+  "name": "@soncodi/signal",
+  "version": "0.0.1",
+  "description": "Tiny signal utility for Node.js and browsers.",
+  "private": true,
+  "author": "Alex Soncodi <asoncodi@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "signal",
+    "events",
+    "micro",
+    "tiny",
+    "nodejs",
+    "browser",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soncodi/signal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soncodi/signal/issues"
+  },
+  "homepage": "https://github.com/soncodi/signal#readme",
+  "scripts": {
+    "clean": "rm -rf ./build ./coverage ./.nyc_output",
+    "lint": "tslint -p tsconfig.json",
+    "test": "tsc && alsatian \"./build/test/**/*.test.js\"",
+    "coverage": "nyc --reporter=lcov npm run test && nyc report",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "package": "npm run clean && npm run build && ./package.sh",
+    "push": "cd ./build/package && npm publish"
+  },
+  "devDependencies": {
+    "alsatian": "~2.2.1",
+    "nyc": "~12.0.2",
+    "typescript": "~2.9.2"
+  }
+}
