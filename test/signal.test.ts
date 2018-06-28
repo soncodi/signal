@@ -1,4 +1,4 @@
-import { TestFixture, Test, SpyOn, Expect, AsyncTest } from 'alsatian';
+import { TestFixture, Test, AsyncTest, SpyOn, Expect } from 'alsatian';
 import { Signal } from '../src';
 
 @TestFixture()

@@ -32,3 +32,20 @@ s.emit(123);
 
 s.off(handler);
 ```
+
+### Methods
+
+#### `on(fn: Function): this`
+Attaches a signal handler to be called whenever the signal fires.
+
+#### `once(fn: Function): this`
+Attaches a one-time handler which is unbound after it fires the first time.
+
+#### `off(fn?: Function): this`
+Detaches one instance of a given handler from the signal. If no handler is provided, detaches all handlers.
+
+#### `emit(arg?: any): this`
+Fires the signal synchronously, triggering any attached handlers with the given `arg`.
+
+#### `event(arg?: any): this`
+Fires the signal asynchronously, triggering any attached handlers with the given `arg`. Used to allow attaching handlers later in the same event loop turn.
