@@ -26,11 +26,11 @@ const handler = (param) => {
   console.log(`signal fired ${param}`);
 };
 
-s.on(handler);
+signal.on(handler);
 
-s.emit(123);
+signal.emit(123);
 
-s.off(handler);
+signal.off(handler);
 ```
 
 ### Methods
