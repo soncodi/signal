@@ -1,6 +1,6 @@
 {
   "name": "@soncodi/signal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tiny signal utility for Node.js and browsers.",
   "private": true,
   "author": "Alex Soncodi <asoncodi@gmail.com>",
