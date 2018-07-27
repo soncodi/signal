@@ -132,4 +132,25 @@ export class SignalTests {
 
     Expect(spy.onEvent).toHaveBeenCalled();
   }
+
+  @AsyncTest()
+  async preserveOrder() {
+    const s = new Signal<number>();
+
+    const results: number[] = [];
+
+    s.on(arg => results.push(arg));
+    s.once(arg => results.push(arg));
+
+    s.emit(1);  // caught twice
+    s.emit(2);
+    s.event(3); // async
+    s.emit(4);
+
+    Expect(results).toEqual([1, 1, 2, 4]);
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    Expect(results).toEqual([1, 1, 2, 4, 3]);
+  }
 }
