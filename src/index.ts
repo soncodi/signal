@@ -48,7 +48,6 @@ export class Signal<T = any> {
   }
 
   event(arg?: T) {
-    // @ts-ignore
     setTimeout(() => this.emit(arg), 0);
 
     return this;
