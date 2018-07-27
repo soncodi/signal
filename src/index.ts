@@ -11,13 +11,14 @@ export class Signal<T = any> {
   }
 
   once(fn: Cb<T>) {
-    const wrap: Cb<T> = (...args: any[]) => {
-      this.off(fn);
+    this.subs.push({
+      fn,
+      wrap: (arg?: T) => {
+        this.off(fn);
 
-      fn.apply(null, args);
-    };
-
-    this.subs.push({ fn, wrap });
+        fn.call(null, arg);
+      }
+    });
 
     return this;
   }
@@ -49,7 +50,6 @@ export class Signal<T = any> {
   event(arg?: T) {
     // @ts-ignore
     setTimeout(() => this.emit(arg), 0);
-    // setImmediate(() => this.emit(arg));
 
     return this;
   }
