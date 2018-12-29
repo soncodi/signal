@@ -1,7 +1,7 @@
 
 export type Cb<T = any> = (t: T) => void;
 
-export class Signal<T = any> {
+export class Signal<T = void> {
   private readonly subs: { fn: Cb<T>; wrap?: Cb<T> }[] = [];
 
   on(fn: Cb<T>) {
@@ -13,7 +13,7 @@ export class Signal<T = any> {
   once(fn: Cb<T>) {
     this.subs.push({
       fn,
-      wrap: (arg?: T) => {
+      wrap: (arg) => {
         this.off(fn);
 
         fn.call(null, arg);
@@ -39,7 +39,7 @@ export class Signal<T = any> {
     return this;
   }
 
-  emit(arg?: T) {
+  emit(arg: T) {
     for (const s of this.subs) {
       (s.wrap || s.fn).call(null, arg);
     }
@@ -47,7 +47,7 @@ export class Signal<T = any> {
     return this;
   }
 
-  event(arg?: T) {
+  event(arg: T) {
     setTimeout(() => this.emit(arg), 0);
 
     return this;
