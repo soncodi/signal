@@ -5,7 +5,7 @@ import { Signal } from '../src';
 export class SignalTests {
   @Test()
   simpleEvent() {
-    const s = new Signal();
+    const s = new Signal<number>();
 
     const spy = { onEvent() { /**/ } };
     SpyOn(spy, 'onEvent');
@@ -28,7 +28,7 @@ export class SignalTests {
     s.on(spy.onEvent);
     s.on(spy.onEvent);
 
-    s.emit(5);
+    s.emit();
 
     Expect(spy.onEvent).toHaveBeenCalled().exactly(2);
   }
@@ -43,7 +43,7 @@ export class SignalTests {
     s.on(spy.onEvent);
     s.off(spy.onEvent);
 
-    s.emit(5);
+    s.emit();
 
     Expect(spy.onEvent).not.toHaveBeenCalled();
   }
@@ -59,7 +59,7 @@ export class SignalTests {
     s.on(spy.onEvent);
     s.off(spy.onEvent);
 
-    s.emit(5);
+    s.emit();
 
     Expect(spy.onEvent).toHaveBeenCalled().exactly(1);
   }
@@ -73,8 +73,8 @@ export class SignalTests {
 
     s.once(spy.onEvent);
 
-    s.emit(5);
-    s.emit(5);
+    s.emit();
+    s.emit();
 
     Expect(spy.onEvent).toHaveBeenCalled().exactly(1);
   }
@@ -93,7 +93,7 @@ export class SignalTests {
     s.on(spy2.onEvent);
     s.off(spy2.onEvent);
 
-    s.emit(5);
+    s.emit();
 
     Expect(spy1.onEvent).toHaveBeenCalled().exactly(1);
     Expect(spy2.onEvent).not.toHaveBeenCalled();
@@ -110,7 +110,7 @@ export class SignalTests {
     s.on(spy.onEvent);
     s.off();
 
-    s.emit(5);
+    s.emit();
 
     Expect(spy.onEvent).not.toHaveBeenCalled();
   }
@@ -124,7 +124,7 @@ export class SignalTests {
 
     s.on(spy.onEvent);
 
-    s.event(5);
+    s.event();
 
     Expect(spy.onEvent).not.toHaveBeenCalled();
 
@@ -152,5 +152,20 @@ export class SignalTests {
     await new Promise(resolve => setTimeout(resolve, 100));
 
     Expect(results).toEqual([1, 1, 2, 4, 3]);
+  }
+
+  @AsyncTest()
+  async voidArg() {
+    const s = new Signal();
+
+    const results: void[] = [];
+
+    s.on(arg => results.push(arg));
+    s.once(arg => results.push(arg));
+
+    s.emit();
+    s.event();
+
+    Expect(results).toEqual([undefined, undefined]);
   }
 }
