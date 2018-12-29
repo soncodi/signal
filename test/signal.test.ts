@@ -154,8 +154,8 @@ export class SignalTests {
     Expect(results).toEqual([1, 1, 2, 4, 3]);
   }
 
-  @AsyncTest()
-  async voidArg() {
+  @Test()
+  voidArg() {
     const s = new Signal();
 
     const results: void[] = [];
