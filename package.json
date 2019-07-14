@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "alsatian": "~2.4.0",
-    "nyc": "~13.3.0",
-    "typescript": "~3.3.4000"
+    "nyc": "~14.1.1",
+    "typescript": "~3.5.3"
   }
 }
