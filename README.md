@@ -5,7 +5,7 @@
 [![Dependency Status](https://david-dm.org/soncodi/signal/status.svg)](https://david-dm.org/soncodi/signal)
 [![npm version](https://badge.fury.io/js/%40soncodi%2Fsignal.svg)](https://badge.fury.io/js/%40soncodi%2Fsignal)
 
-**Tiny signal utility for Node.js and browsers**
+**Tiny, typed signal utility for Node.js and browsers**
 
 ### Installation
 
@@ -20,30 +20,30 @@ import { Signal } from '@soncodi/signal';
 
 const signal = new Signal<number>();
 
-const handler = (param: number) => {
+const cb = (param: number) => {
   console.log(`signal fired ${param}`);
 };
 
-signal.on(handler);
+signal.on(cb);
 
 signal.emit(123);
 
-signal.off(handler);
+signal.off(cb);
 ```
 
 ### Methods
 
-#### `on(fn: (arg: T) => void): this`
+#### `on(fn)`
 Attaches a signal handler to be called whenever the signal fires.
 
-#### `once(fn: (arg: T) => void): this`
+#### `once(fn)`
 Attaches a one-time handler which is unbound after it fires the first time.
 
-#### `off(fn?: (arg: T) => void): this`
+#### `off(fn?)`
 Detaches one instance of a given handler from the signal. If no handler is provided, detaches all handlers.
 
-#### `emit(arg: T): this`
+#### `emit(arg)`
 Fires the signal synchronously, triggering any attached handlers with the given `arg`.
 
-#### `event(arg: T): this`
+#### `event(arg)`
 Fires the signal asynchronously, triggering any attached handlers with the given `arg`. Useful when attaching handlers later in the same event loop turn.
