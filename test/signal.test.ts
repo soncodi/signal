@@ -168,4 +168,25 @@ export class SignalTests {
 
     Expect(results).toEqual([undefined, undefined]);
   }
+
+  @Test()
+  composeSignal() {
+    const Sub = class {
+      signal = new Signal<number>();
+
+      trigger(num: number) {
+        return this.signal.emit(num);
+      }
+    };
+
+    const s = new Sub();
+
+    const results: number[] = [];
+
+    s.signal.on(arg => results.push(arg));
+
+    s.trigger(1).emit(2);
+
+    Expect(results).toEqual([1, 2]);
+  }
 }
