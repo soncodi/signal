@@ -1,48 +1,44 @@
 
-export type Cb<T = any> = (t: T) => void;
+export type Cb<T> = (t: T) => void;
 
 export class Signal<T = void> {
-  private readonly subs: { fn: Cb<T>; wrap?: Cb<T> }[] = [];
+  private readonly subs: Cb<T>[] = [];
 
   on(fn: Cb<T>) {
-    this.subs.push({ fn });
+    this.subs.push(fn);
 
     return this;
   }
 
   once(fn: Cb<T>) {
-    this.subs.push({
-      fn,
-      wrap: (arg) => {
-        this.off(fn);
+    const wrap: Cb<T> = (arg) => {
+      this.off(wrap);
 
-        fn.call(null, arg);
-      }
-    });
+      fn.call(null, arg);
+    };
+
+    this.subs.push(wrap);
 
     return this;
   }
 
   off(fn?: Cb<T>) {
-    if (!fn) {
-      this.subs.length = 0; // truncate
+    if (fn) {
+      const idx = this.subs.indexOf(fn);
+
+      if (idx !== -1) {
+        this.subs.splice(idx, 1); // only remove one
+      }
     }
     else {
-      for (let i = 0; i < this.subs.length; i++) {
-        if (this.subs[i].fn === fn) {
-          this.subs.splice(i, 1);
-          break; // only remove one
-        }
-      }
+      this.subs.length = 0; // truncate
     }
 
     return this;
   }
 
   emit(arg: T) {
-    for (const s of this.subs) {
-      (s.wrap || s.fn).call(null, arg);
-    }
+    this.subs.forEach(s => s.call(null, arg));
 
     return this;
   }
