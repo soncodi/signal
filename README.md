@@ -7,6 +7,8 @@
 
 **Tiny, typed signal utility for Node.js and browsers**
 
+_Need multiple dynamic events and types? Check out [EE (Event Emitter)](https://github.com/soncodi/ee) instead_
+
 ### Installation
 
 ```sh
@@ -18,11 +20,10 @@ npm install @soncodi/signal --save
 ```typescript
 import { Signal } from '@soncodi/signal';
 
+// specify callback param type
 const signal = new Signal<number>();
 
-const cb = (param: number) => {
-  console.log(`signal fired ${param}`);
-};
+const cb = (num: number) => console.log('signal', num);
 
 signal.on(cb);
 
