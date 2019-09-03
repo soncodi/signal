@@ -1,4 +1,4 @@
-import { TestFixture, Test, AsyncTest, SpyOn, Expect } from 'alsatian';
+import { TestFixture, Test, SpyOn, Expect } from 'alsatian';
 import { Signal } from '../src';
 
 @TestFixture()
@@ -7,7 +7,7 @@ export class SignalTests {
   simpleEvent() {
     const s = new Signal<number>();
 
-    const spy = { onEvent() { /**/ } };
+    const spy = { onEvent(_: number) { /**/ } };
     SpyOn(spy, 'onEvent');
 
     s.on(spy.onEvent);
@@ -115,7 +115,7 @@ export class SignalTests {
     Expect(spy.onEvent).not.toHaveBeenCalled();
   }
 
-  @AsyncTest()
+  @Test()
   async asyncEvent() {
     const s = new Signal();
 
@@ -150,7 +150,7 @@ export class SignalTests {
     Expect(spy.onEvent).toHaveBeenCalled().exactly(3);
   }
 
-  @AsyncTest()
+  @Test()
   async preserveOrder() {
     const s = new Signal<number>();
 
