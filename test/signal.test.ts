@@ -133,6 +133,23 @@ export class SignalTests {
     Expect(spy.onEvent).toHaveBeenCalled();
   }
 
+  @Test()
+  onceHandlerMulti() {
+    const s = new Signal();
+
+    const spy = { onEvent() { /**/ } };
+    SpyOn(spy, 'onEvent');
+
+    s.once(spy.onEvent);
+    s.once(spy.onEvent);
+
+    s.on(spy.onEvent);
+
+    s.emit();
+
+    Expect(spy.onEvent).toHaveBeenCalled().exactly(3);
+  }
+
   @AsyncTest()
   async preserveOrder() {
     const s = new Signal<number>();

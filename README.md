@@ -5,7 +5,7 @@
 [![Dependency Status](https://david-dm.org/soncodi/signal/status.svg)](https://david-dm.org/soncodi/signal)
 [![npm version](https://badge.fury.io/js/%40soncodi%2Fsignal.svg)](https://badge.fury.io/js/%40soncodi%2Fsignal)
 
-**Tiny, typed signal utility for Node.js and browsers**
+**Tiny, typed signal utility for Node.js and browsers. No dependencies.**
 
 _Need multiple dynamic events and types? Check out [EE (Event Emitter)](https://github.com/soncodi/ee) instead_
 
