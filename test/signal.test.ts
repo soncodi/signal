@@ -206,4 +206,34 @@ export class SignalTests {
 
     Expect(results).toEqual([1, 2]);
   }
+
+  @Test()
+  nestedHandler() {
+    const s = new Signal<number>();
+
+    const results: number[] = [];
+
+    const cb1 = () => {
+      results.push(1);
+
+      s.on(cb2);
+    };
+
+    const cb2 = () => {
+      s.on(cb1);
+
+      results.push(2);
+    };
+
+    s.on(cb1);
+    s.once(cb2);
+
+    s.emit(0);
+
+    Expect(results).toEqual([1, 2]);
+
+    s.emit(0);
+
+    Expect(results).toEqual([1, 2, 1, 2, 1]);
+  }
 }

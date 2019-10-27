@@ -5,7 +5,7 @@ export class Signal<T = void> {
   private readonly subs: Cb<T>[] = [];
 
   on(fn: Cb<T>) {
-    this.subs.unshift(fn);
+    this.subs.push(fn);
 
     return this;
   }
@@ -17,7 +17,7 @@ export class Signal<T = void> {
       fn.call(null, arg);
     };
 
-    this.subs.unshift(wrap);
+    this.subs.push(wrap);
 
     return this;
   }
@@ -38,9 +38,7 @@ export class Signal<T = void> {
   }
 
   emit(arg: T) {
-    for (let i = this.subs.length - 1; i >= 0; i--) {
-      this.subs[i].call(null, arg);
-    }
+    this.subs.slice().forEach(s => s.call(null, arg));
 
     return this;
   }
